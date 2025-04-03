@@ -49,4 +49,14 @@ public class UserService {
         findUser.updatePassword(requestDto.getNewPassword());
 
     }
+
+    public void deleteUser(Long id) {
+
+        User findUser = userRepository.findByIdOrElseThrow(id);
+
+        // 비밀번호 확인하고 삭제하고 싶은데, delete는 RequestBody를 안받고 query param으로 해결한다고 한다.
+
+        userRepository.delete(findUser);
+
+    }
 }
