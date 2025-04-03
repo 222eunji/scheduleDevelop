@@ -2,11 +2,15 @@ package com.example.scheduledevelop.service;
 
 import com.example.scheduledevelop.dto.SignUpRequestDto;
 import com.example.scheduledevelop.dto.SignUpResponseDto;
+import com.example.scheduledevelop.dto.UpdatePasswordDto;
 import com.example.scheduledevelop.dto.UserResponseDto;
 import com.example.scheduledevelop.entity.User;
 import com.example.scheduledevelop.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 
@@ -31,5 +35,18 @@ public class UserService {
                 .stream()
                 .map(UserResponseDto::toDto)
                 .toList();
+    }
+
+    @Transactional
+    public void updatePassword(Long id, UpdatePasswordDto requestDto) {
+
+        User findUser = userRepository.findByIdOrElseThrow(id);
+
+        if(!findUser.getPassword().equals(requestDto.getOldPassword())) {
+            throw new ResponseStatusException(HttpStatus.UNAUTHORIZED);
+        }
+
+        findUser.updatePassword(requestDto.getNewPassword());
+
     }
 }
