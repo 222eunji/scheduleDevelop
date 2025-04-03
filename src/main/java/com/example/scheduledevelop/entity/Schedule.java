@@ -1,5 +1,6 @@
 package com.example.scheduledevelop.entity;
 
+import com.example.scheduledevelop.dto.CreateScheduleRequestDto;
 import com.fasterxml.jackson.databind.ser.Serializers;
 import jakarta.persistence.*;
 import lombok.Getter;
@@ -23,4 +24,11 @@ public class Schedule extends BaseEntity {
     @JoinColumn(name = "userId")
     private User user;
 
+    public Schedule(){};
+
+    public Schedule(CreateScheduleRequestDto requestDto, User user) {
+        this.title = requestDto.getTitle();
+        this.content = requestDto.getContent();
+        this.user = user;
+    }
 }
