@@ -2,12 +2,17 @@ package com.example.scheduledevelop.service;
 
 import com.example.scheduledevelop.dto.CreateScheduleRequestDto;
 import com.example.scheduledevelop.dto.CreateScheduleResponseDto;
+import com.example.scheduledevelop.dto.ScheduleResponseDto;
+import com.example.scheduledevelop.dto.UpdateScheduleRequestDto;
 import com.example.scheduledevelop.entity.Schedule;
 import com.example.scheduledevelop.entity.User;
 import com.example.scheduledevelop.repository.ScheduleRepository;
 import com.example.scheduledevelop.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -25,5 +30,30 @@ public class ScheduleService {
         Schedule savedSchedule = scheduleRepository.save(schedule);
 
         return new CreateScheduleResponseDto(savedSchedule.getScheduleId(), savedSchedule.getTitle(), savedSchedule.getContent());
+    }
+
+    public List<ScheduleResponseDto> findAll() {
+
+        return scheduleRepository.findAll()
+                .stream()
+                .map(ScheduleResponseDto::toDto)
+                .toList();
+    }
+
+    @Transactional
+    public void updateContent(Long scheduleId, UpdateScheduleRequestDto requestDto) {
+
+        Schedule findSchedule = scheduleRepository.findScheduleByIdOrElseThrow(scheduleId);
+
+        findSchedule.updateContent(requestDto.getContent());
+    }
+
+
+    public void deleteSchedule(Long scheduleId) {
+
+        Schedule findSchedule = scheduleRepository.findScheduleByIdOrElseThrow(scheduleId);
+
+        scheduleRepository.delete(findSchedule);
+
     }
 }

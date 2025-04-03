@@ -31,4 +31,8 @@ public class Schedule extends BaseEntity {
         this.content = requestDto.getContent();
         this.user = user;
     }
+
+    public void updateContent(String content) {
+        this.content = content;
+    }
 }
