@@ -1,7 +1,6 @@
 package com.example.scheduledevelop.entity;
 
-import com.example.scheduledevelop.dto.CreateScheduleRequestDto;
-import com.fasterxml.jackson.databind.ser.Serializers;
+import com.example.scheduledevelop.dto.Schedule.CreateScheduleRequestDto;
 import jakarta.persistence.*;
 import lombok.Getter;
 

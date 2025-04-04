@@ -1,10 +1,8 @@
 package com.example.scheduledevelop.controller;
 
-import com.example.scheduledevelop.dto.SignUpRequestDto;
-import com.example.scheduledevelop.dto.SignUpResponseDto;
-import com.example.scheduledevelop.dto.UpdatePasswordDto;
-import com.example.scheduledevelop.dto.UserResponseDto;
+import com.example.scheduledevelop.dto.User.*;
 import com.example.scheduledevelop.service.UserService;
+import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -19,8 +17,17 @@ public class UserController {
 
     private final UserService userService;
 
+    // 로그인 요청
+    @GetMapping("/login")
+    public ResponseEntity<String> login(
+            @RequestBody LoginRequestDto requestDto, HttpServletRequest request){
+        userService.login(requestDto, request);
+        return new ResponseEntity<>("로그인 성공",HttpStatus.OK);
+
+    }
+
     // 유저 생성
-    @PostMapping
+    @PostMapping("/signUp")
     public ResponseEntity<SignUpResponseDto> signUp(@RequestBody SignUpRequestDto RequestDto) {
 
         SignUpResponseDto signupUser = userService.signup(RequestDto);

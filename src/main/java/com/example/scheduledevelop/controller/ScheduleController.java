@@ -1,9 +1,9 @@
 package com.example.scheduledevelop.controller;
 
-import com.example.scheduledevelop.dto.CreateScheduleRequestDto;
-import com.example.scheduledevelop.dto.CreateScheduleResponseDto;
-import com.example.scheduledevelop.dto.ScheduleResponseDto;
-import com.example.scheduledevelop.dto.UpdateScheduleRequestDto;
+import com.example.scheduledevelop.dto.Schedule.CreateScheduleRequestDto;
+import com.example.scheduledevelop.dto.Schedule.CreateScheduleResponseDto;
+import com.example.scheduledevelop.dto.Schedule.ScheduleResponseDto;
+import com.example.scheduledevelop.dto.Schedule.UpdateScheduleRequestDto;
 import com.example.scheduledevelop.service.ScheduleService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;

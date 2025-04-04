@@ -1,11 +1,10 @@
 package com.example.scheduledevelop.service;
 
-import com.example.scheduledevelop.dto.SignUpRequestDto;
-import com.example.scheduledevelop.dto.SignUpResponseDto;
-import com.example.scheduledevelop.dto.UpdatePasswordDto;
-import com.example.scheduledevelop.dto.UserResponseDto;
+import com.example.scheduledevelop.dto.User.*;
 import com.example.scheduledevelop.entity.User;
 import com.example.scheduledevelop.repository.UserRepository;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
@@ -19,6 +18,18 @@ import java.util.List;
 public class UserService {
 
     private final UserRepository userRepository;
+
+    public void login(LoginRequestDto requestDto, HttpServletRequest request) {
+
+        User findUser = userRepository.findUserByEmailOrElseThrow(requestDto);
+        if(!findUser.getPassword().equals(requestDto.getPassword())){
+            throw new ResponseStatusException(HttpStatus.UNAUTHORIZED,"비밀번호가 일치하지 않습니다.");
+        }
+
+        // 로그인 성공 시 세션에 저장
+        HttpSession session = request.getSession(true);
+        session.setAttribute("user", findUser);
+    }
 
     public SignUpResponseDto signup(SignUpRequestDto requestDto) {
 
@@ -57,4 +68,5 @@ public class UserService {
         userRepository.delete(findUser);
 
     }
+
 }
