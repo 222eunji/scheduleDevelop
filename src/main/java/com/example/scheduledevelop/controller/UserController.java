@@ -18,7 +18,7 @@ public class UserController {
     private final UserService userService;
 
     // 로그인 요청
-    @GetMapping("/login")
+    @PostMapping("/login")
     public ResponseEntity<String> login(
             @RequestBody LoginRequestDto requestDto, HttpServletRequest request){
         userService.login(requestDto, request);
